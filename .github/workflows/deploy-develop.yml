@@ -27,8 +27,18 @@ jobs:
           php-version: 8.2
           tools: composer
 
-      - name: 💾 Install Composer packages
-        run: composer install --ignore-platform-reqs
+
+      #- name: Authenticate Composer with GitHub
+      #  run: composer config --global --auth github-oauth.github.com ${{ secrets.GITHUB_TOKEN }}
+
+      #- name: Debug Composer Authentication
+      #  run: composer config --list --global
+      
+      #- name: Test GitHub repository access
+      #  run: git ls-remote https://github.com/seegr/visu-cms-ddev.git
+        
+      #- name: 💾 Install Composer packages
+      #  run: composer install --ignore-platform-reqs
 
       - name: 🐘🔬 Run PHP checks (PHPStan)
         run: npm run test-php
