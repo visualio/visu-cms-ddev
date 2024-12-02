@@ -104,9 +104,7 @@ try {
 	runCommand("git commit -m 'Initial commit'");
 
 	// Vytvoření branchí master a develop
-	echo "\nCreating branches 'master' and 'develop'...\n";
-	runCommand("git checkout -b master");
-	runCommand("git push -u origin master");
+	echo "\nCreating 'develop' branch...\n";
 	runCommand("git checkout -b develop");
 	runCommand("git push -u origin develop");
 
