@@ -5,7 +5,22 @@ echo "Welcome to the Visualio App setup!\n\n";
 // Dotazy na vstupy s výchozími hodnotami
 $projectName = readline("Enter project name [default: visu-app]: ");
 $projectName = $projectName ?: 'visu-app';
+$githubUser = 'seegr';
 
+// Zkontroluj dostupnost názvu repozitáře přes SSH
+$repoUrl = "git@github.com:$githubUser/$projectName.git";
+exec("git ls-remote $repoUrl", $output, $returnCode);
+
+while ($returnCode === 0) {
+	echo "\033[31mError: Repository '$projectName' already exists on GitHub.\033[0m\n";
+	$projectName = readline("Enter a new project name: ");
+	$repoUrl = "git@github.com:$githubUser/$projectName.git";
+	exec("git ls-remote $repoUrl", $output, $returnCode);
+}
+
+echo "\nRepository name '$projectName' is available.\n";
+
+// Pokračování s dalšími dotazy
 $phpVersion = readline("PHP version [default: 8.2]: ");
 $phpVersion = $phpVersion ?: '8.2';
 
@@ -71,9 +86,27 @@ function runCommand(string $command)
 }
 
 try {
+	// Vytvoření repozitáře přes SSH
+	echo "\nCreating repository on GitHub via SSH...\n";
+	runCommand("ssh git@github.com repo create $projectName --private");
+
+	echo "\nRepository '$projectName' created successfully.\n";
+
+	// Nastavení Git repozitáře lokálně
+	echo "\nInitializing Git repository...\n";
+	runCommand("git init");
+	runCommand("git remote add origin $repoUrl");
+
+	// Přidání secrets do GitHub Actions
+	echo "\nAdding secrets to GitHub repository...\n";
+	runCommand("gh secret set SLACK_WEBHOOK --repo $githubUser/$projectName --body \"https://hooks.slack.com/services/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\"");
+//	runCommand("gh secret set ANOTHER_SECRET --repo $githubUser/$projectName --body \"secret-value\"");
+
+	echo "\nSecrets added successfully.\n";
+
 	echo "\nRunning build script...\n";
-	runCommand("composer config process-timeout 600");
-	runCommand("npm run ddev:build");
+//	runCommand("composer config process-timeout 600");
+//	runCommand("npm run ddev:build");
 
 	echo "\nBuild completed successfully. You're ready to go!\n";
 } catch (RuntimeException $e) {
