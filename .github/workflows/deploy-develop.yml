@@ -8,6 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
+      - name: Configure Git authentication
+        run: |
+          git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
+          git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "git@github.com:"
+
       - name: 🚚 Get latest code
         uses: actions/checkout@v3
 
@@ -39,7 +44,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD_DEV }}
           protocol: ftps
           local-dir: './'
-          server-dir: './subdom/burdamediaextra/'
+          server-dir: './${{ secrets.FTP_SERVER_DIR_DEV }}/'
           state-name: '.deploy-sync-state.json'
           timeout: 3600000
           #log-level: verbose
@@ -140,7 +145,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD_DEV }}
           protocol: ftps
           local-dir: './vendor/'
-          server-dir: './subdom/burdamediaextra/vendor/'
+          server-dir: './${{ secrets.FTP_SERVER_DIR_DEV }}/vendor/'
           state-name: '.deploy-vendor-sync-state.json'
           timeout: 3600000
           #log-level: verbose
@@ -153,4 +158,4 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD_DEV }}
           remoteFiles: "temp/.gitignore"
           remoteDirectories: "temp/cache"
-          workingDir: "./subdom/burdamediaextra"
+          workingDir: "./${{ secrets.FTP_SERVER_DIR_DEV }}"

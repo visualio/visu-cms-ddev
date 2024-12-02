@@ -23,7 +23,8 @@
     "test-php": "./vendor/bin/phpstan analyse",
     "test-latte": "./vendor/bin/latte-lint app",
     "ddev:build": "bash ./bin/generate-configs.sh && ./bin/build.sh",
-    "ddev:start": "bash ./bin/start.sh"
+    "ddev:start": "bash ./bin/start.sh",
+    "ddev:info": "bash ./bin/ddev-info.sh"
   },
   "repository": {
     "type": "git",

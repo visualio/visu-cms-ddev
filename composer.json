@@ -1,5 +1,5 @@
 {
-  "name": "nette/web-project",
+  "name": "seegr/visu-cms-ddev",
   "description": "Visualio app skeleton",
   "type": "project",
   "license": [
@@ -13,6 +13,12 @@
       "@php bin/setup.php"
     ]
   },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/seegr/visu-cms-ddev.git"
+    }
+  ],
   "require": {
     "php": ">=8.2",
     "nette/application": "^3.1",
