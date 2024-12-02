@@ -72,6 +72,7 @@ function runCommand(string $command)
 
 try {
 	echo "\nRunning build script...\n";
+	runCommand("composer config process-timeout 600");
 	runCommand("npm run ddev:build");
 
 	echo "\nBuild completed successfully. You're ready to go!\n";
