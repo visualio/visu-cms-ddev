@@ -1,52 +1,41 @@
 #!/bin/bash
 
+set -e  # Ukončí skript při jakékoliv chybě
+
+# Kontrola, zda existuje .env soubor
 if [ -f .env ]; then
   export $(grep -v '^#' .env | xargs)
 else
-  echo -e "\e[31mError: .env file not found.\e[0m"
+  echo -e "\033[31mError: .env file not found.\033[0m"
   exit 1
 fi
 
+# Kontrola, zda je HTTPS_PORT definován
 if [ -z "$HTTPS_PORT" ]; then
-  echo -e "\e[31mError: HTTPS_PORT is not defined in .env.\e[0m"
+  echo -e "\033[31mError: HTTPS_PORT is not defined in .env.\033[0m"
   exit 1
 fi
 
-# Restart ddev
-echo "Stopping all DDEV containers..."
+# Restart DDEV
+echo -e "\033[36mStopping all DDEV containers...\033[0m"
 ddev poweroff
 ddev restart
 
-# Spuštění příkazů s reálným výstupem
+# Generování SSL certifikátu
+echo -e "\033[36mGenerating SSL certificate...\033[0m"
+ddev auth ssh
+
+# Spuštění Composer install
 echo -e "\033[36mRunning composer install...\033[0m"
-ddev exec bash -c "composer install"
+ddev exec "composer install" | stdbuf -oL cat
+echo -e "\033[32mComposer install completed.\033[0m"
 
+# Spuštění npm install
 echo -e "\033[36mRunning npm install...\033[0m"
-ddev exec bash -c "npm install"
+ddev exec "npm install" | stdbuf -oL cat
+echo -e "\033[32mNpm install completed.\033[0m"
 
+# Build front-end assets
 echo -e "\033[36mBuilding assets...\033[0m"
-ddev exec bash -c "npm run build"
-
-# Získání jedinečné URL na základě HTTPS portu
-PROJECT_URL=$(ddev describe | grep -Eo "https://[a-zA-Z0-9.-]+:$HTTPS_PORT" | head -n 1)
-
-# Získání údajů o databázi
-DB_HOST=$(ddev describe | grep "DB Hostname:" | awk '{print $3}')
-DB_PORT=$(ddev describe | grep "DB Port:" | awk '{print $3}')
-DB_USER=$(ddev describe | grep "Username:" | awk '{print $2}')
-DB_PASSWORD=$(ddev describe | grep "Password:" | awk '{print $2}')
-
-# Výstup informací
-echo -e "\033[32mAnd we are ready!\033[0m"
-echo -e "\033[36mTo run Vite server use: \033[33mnpm start\033[0m"
-echo -e "\033[36mTo build assets use: \033[33mnpm run build\033[0m"
-echo -e "\033[36mProject is served on: \033[4m$PROJECT_URL\033[0m"
-echo -e "\033[36mDatabase connection details:\033[0m"
-echo -e "\033[36m  Host: \033[33m$DB_HOST\033[0m"
-echo -e "\033[36m  Port: \033[33m$DB_PORT\033[0m"
-echo -e "\033[36m  User: \033[33m$DB_USER\033[0m"
-echo -e "\033[36m  Password: \033[33m$DB_PASSWORD\033[0m"
-echo -e "\033[36mNext time just use: \033[4mddev start\033[0m"
-
-# Připojení do kontejneru
-ddev ssh
+ddev exec "npm run build" | stdbuf -oL cat
+echo -e "\033[32mAssets built successfully.\033[0m"

@@ -3,7 +3,7 @@
 echo "Welcome to the Visualio App setup!\n\n";
 
 // Dotazy na vstupy s výchozími hodnotami
-$projectName = readline("Enter project name [default: visu-app]: ");
+$projectName = readline("Enter project/repo name [default: visu-app]: ");
 $projectName = $projectName ?: 'visu-app';
 $githubUser = 'seegr';
 
@@ -56,12 +56,11 @@ if (!shell_exec("command -v npm")) {
 	exit(1);
 }
 
-// Funkce pro spuštění příkazu s reálným výstupem
 function runCommand(string $command)
 {
 	$process = proc_open($command, [
-		1 => ['pipe', 'w'], // Standardní výstup
-		2 => ['pipe', 'w'], // Chybový výstup
+		1 => ['pipe', 'w'],
+		2 => ['pipe', 'w'],
 	], $pipes);
 
 	if (!is_resource($process)) {
@@ -69,11 +68,11 @@ function runCommand(string $command)
 	}
 
 	while (($line = fgets($pipes[1])) !== false) {
-		echo $line; // Výstup do konzole
+		echo $line;
 	}
 
 	while (($error = fgets($pipes[2])) !== false) {
-		echo $error; // Chyby do konzole
+		echo $error;
 	}
 
 	fclose($pipes[1]);
@@ -97,17 +96,42 @@ try {
 	runCommand("git init");
 	runCommand("git remote add origin git@github.com:$githubUser/$projectName.git");
 
+	// Vytvoření branchí master a develop
+	echo "\nCreating branches 'master' and 'develop'...\n";
+	runCommand("git checkout -b develop");
+	runCommand("git push -u origin develop");
+
+	echo "\nBranches 'master' and 'develop' created successfully.\n";
+
+	// Dotazy na volitelné FTP údaje
+	$ftpHostDev = readline("Enter dev FTP host (leave blank to skip): ");
+	$ftpUserDev = readline("Enter dev FTP user (leave blank to skip): ");
+	$ftpPassDev = readline("Enter dev FTP password (leave blank to skip): ");
+	$ftpServerDirDev = readline("Enter dev FTP server directory (leave blank to skip): ");
+
 	// Přidání secrets do GitHub Actions
 	echo "\nAdding secrets to GitHub repository...\n";
-	runCommand("gh secret set SLACK_WEBHOOK --repo $githubUser/$projectName --body \"https://hooks.slack.com/services/YOUR/WEBHOOK/URL\"");
+
+	if (!empty($ftpHostDev)) {
+		runCommand("gh secret set FTP_HOST_DEV --repo $githubUser/$projectName --body \"$ftpHostDev\"");
+	}
+	if (!empty($ftpUserDev)) {
+		runCommand("gh secret set FTP_USERNAME_DEV --repo $githubUser/$projectName --body \"$ftpUserDev\"");
+	}
+	if (!empty($ftpPassDev)) {
+		runCommand("gh secret set FTP_PASSWORD_DEV --repo $githubUser/$projectName --body \"$ftpPassDev\"");
+	}
+	if (!empty($ftpServerDirDev)) {
+		runCommand("gh secret set FTP_SERVER_DIR_DEV --repo $githubUser/$projectName --body \"$ftpServerDirDev\"");
+	}
 
 	echo "\nSecrets added successfully.\n";
 
 	echo "\nRunning build script...\n";
 	runCommand("composer config process-timeout 600");
 	runCommand("npm run ddev:build");
+	runCommand("npm run ddev:info");
 
-	echo "\nBuild completed successfully. You're ready to go!\n";
 } catch (RuntimeException $e) {
 	echo "\nError: " . $e->getMessage() . "\n";
 	exit(1);

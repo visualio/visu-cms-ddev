@@ -40,13 +40,6 @@ disable_upload_dirs_warning: true
 router_http_port: "$HTTP_PORT"
 router_https_port: "$HTTPS_PORT"
 
-upload_dirs:
-  - "../app"
-  - "../dev"
-  - "../sql"
-  - "../scripts"
-  - "assets"
-
 hooks:
   post-start:
     - exec: './bin/db-init.sh'
@@ -89,6 +82,8 @@ sync:
         - "/.ddev/.importdb*"
         - ".DS_Store"
         - ".idea"
+        - "node_modules"
+        - "package.lock.json"
     symlink:
       mode: "posix-raw"
 EOL
