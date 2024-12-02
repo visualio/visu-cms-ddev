@@ -35,20 +35,47 @@ file_put_contents('.env', $envContent);
 echo "\n.env file created with the following content:\n";
 echo $envContent . "\n";
 
+// Kontrola instalace npm
 if (!shell_exec("command -v npm")) {
 	echo "\nError: npm is not installed or not in PATH. Please install Node.js before proceeding.\n";
 	exit(1);
 }
 
-echo "\nRunning build script...\n";
-$buildOutput = shell_exec("npm run ddev:build 2>&1");
+// Funkce pro spuštění příkazu s reálným výstupem
+function runCommand(string $command)
+{
+	$process = proc_open($command, [
+		1 => ['pipe', 'w'], // Standardní výstup
+		2 => ['pipe', 'w'], // Chybový výstup
+	], $pipes);
 
-if ($buildOutput === null) {
-	echo "\nError: Failed to execute build script. Please check your npm setup.\n";
-	exit(1);
+	if (!is_resource($process)) {
+		throw new RuntimeException("Failed to execute command: $command");
+	}
+
+	while (($line = fgets($pipes[1])) !== false) {
+		echo $line; // Výstup do konzole
+	}
+
+	while (($error = fgets($pipes[2])) !== false) {
+		echo $error; // Chyby do konzole
+	}
+
+	fclose($pipes[1]);
+	fclose($pipes[2]);
+
+	$exitCode = proc_close($process);
+	if ($exitCode !== 0) {
+		throw new RuntimeException("Command failed with exit code $exitCode: $command");
+	}
 }
 
-echo "\nBuild script output:\n";
-echo $buildOutput;
+try {
+	echo "\nRunning build script...\n";
+	runCommand("npm run ddev:build");
 
-echo "\nBuild completed successfully. You're ready to go!\n";
+	echo "\nBuild completed successfully. You're ready to go!\n";
+} catch (RuntimeException $e) {
+	echo "\nError: " . $e->getMessage() . "\n";
+	exit(1);
+}
