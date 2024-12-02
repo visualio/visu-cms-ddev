@@ -9,7 +9,8 @@ $githubUser = 'visualio';
 
 // Zkontroluj dostupnost názvu repozitáře přes GitHub CLI
 $repoUrl = "git@github.com:$githubUser/$projectName.git";
-echo "gh repo view $githubUser/$projectName"
+echo "baf";
+echo "gh repo view $githubUser/$projectName";
 exec("gh repo view $githubUser/$projectName --json name 2>&1", $output, $returnCode);
 
 while ($returnCode === 0) {
