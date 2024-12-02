@@ -98,8 +98,15 @@ try {
 	runCommand("git init");
 	runCommand("git remote add origin git@github.com:$githubUser/$projectName.git");
 
+	// Přidání prvního commitu
+	echo "\nCreating initial commit...\n";
+	runCommand("git add .");
+	runCommand("git commit -m 'Initial commit'");
+
 	// Vytvoření branchí master a develop
 	echo "\nCreating branches 'master' and 'develop'...\n";
+	runCommand("git checkout -b master");
+	runCommand("git push -u origin master");
 	runCommand("git checkout -b develop");
 	runCommand("git push -u origin develop");
 
