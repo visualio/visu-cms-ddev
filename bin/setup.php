@@ -5,7 +5,7 @@ echo "Welcome to the Visualio App setup!\n\n";
 // Dotazy na vstupy s výchozími hodnotami
 $projectName = readline("Enter project/repo name [default: visu-app]: ");
 $projectName = $projectName ?: 'visu-app';
-$githubUser = 'seegr';
+$githubUser = 'visualio';
 
 // Zkontroluj dostupnost názvu repozitáře přes GitHub CLI
 $repoUrl = "git@github.com:$githubUser/$projectName.git";
