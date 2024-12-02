@@ -1,0 +1,58 @@
+{varType array $locales}
+
+{snippet form}
+    <form
+            n:name="form"
+            class="dynamic-form"
+            data-ajax-parent="{App\Components\DynamicForm::ORIGINAL_POST}"
+    >
+        {* locale swithcer *}
+        <div
+                n:if="$form->getElementPrototype()->getAttribute(App\Components\DynamicForm::FLAG_HAS_TRANSLATION)"
+                uk-sticky="offset: 80"
+                class="locale-switcher"
+        >
+            <ul class="uk-tab uk-tab-bottom" uk-tab="connect: .dynamic-form .translations-container">
+                <li n:foreach="$locales as $locale"><a href="#">{$locale}</a></li>
+            </ul>
+        </div>
+
+        <div class="uk-alert-danger uk-alert" uk-alert n:ifcontent>
+            <p n:foreach="$form->ownErrors as $error">{$error}</p>
+        </div>
+
+        <section
+                n:foreach="$form->getGroups() as $group"
+                n:attr="$group->getOption('attributes') ?? []"
+        >
+            <h3 n:if="$group->getOption('label')" class="uk-width-1-1">
+                {$group->getOption('label')}
+            </h3>
+
+            {foreach $group->getControls() as $input}
+                {if !$input->getOption(rendered)}
+                    {switch $input->name}
+                        {case App\Components\DynamicForm::MARKER_MULTIPLIER_START}
+                            {var string $id = $input->getOption(id) ?: $input->htmlId . '-multiplier'}
+                            <fieldset n:attr="$input->getOption(attributes) ?? []" id="{$id}">
+                                {include "templates/dynamicFormHead.latte" input: $input, id: $id}
+                                <div class="uk-switcher uk-overflow-hidden">
+                        {case App\Components\DynamicForm::MARKER_MULTIPLIER_END}
+                                </div>
+                            </fieldset>
+                        {case App\Components\DynamicForm::MARKER_MULTIPLIER_ITEM_START}
+                            <section class="multiplier-item" data-sortable-key="{$input->getOption(entityId)}">
+                        {case App\Components\DynamicForm::MARKER_MULTIPLIER_ITEM_END}
+                            </section>
+                        {case App\Components\DynamicForm::MARKER_TRANSLATION_START}
+                            <fieldset class="translations-container uk-switcher">
+                        {case App\Components\DynamicForm::MARKER_TRANSLATION_END}
+                            </fieldset>
+                        {default}
+                            {include "templates/dynamicFormInput.latte" input: $input, form: $form}
+                    {/switch}
+                {/if}
+            {/foreach}
+        </section>
+    </form>
+{/snippet}

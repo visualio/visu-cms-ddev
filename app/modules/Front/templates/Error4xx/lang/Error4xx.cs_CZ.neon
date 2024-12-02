@@ -1,0 +1,16 @@
+4xx:
+    title: 'Oops...'
+    message: 'Váš prohlížeč odeslal požadavek, který tento server nemohl pochopit nebo zpracovat.'
+403:
+    title: 'Přístup odepřen'
+    message: 'K zobrazení této stránky nemáte oprávnění. Pokud se domníváte, že byste měli být schopni zobrazit tuto stránku, zkuste kontaktovat správce webu.'
+404:
+    title: 'Stránka nenalezena'
+    message: 'Požadovanou stránku nelze najít. Je možné, že je adresa nesprávná, nebo že stránka již neexistuje. Pomocí vyhledávače vyhledejte, co hledáte.'
+405:
+    title: 'Metoda není povolena'
+    message: 'Požadovaná metoda není pro adresu URL povolena.'
+410:
+    title: 'Stránka nenalezena'
+    message: 'Stránka, kterou jste požadovali, byla odstraněna z webu. Omlouváme se za nepříjemnosti.'
+    goBack: 'Zpět na úvodní stránku'

@@ -1,0 +1,24 @@
+{templateType App\FrontModule\Types\BaseTemplate}
+
+<script type='application/ld+json'>
+    {
+        "@context": "http://www.schema.org",
+        "@type": "Organization",
+        "name": {$contact->name},
+        "url": {$baseUrl|noescape},
+        "email": {$contact->name},
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": {$contact->street},
+            "addressLocality": {$contact->city},
+            "postalCode": {$contact->postCode},
+            "addressCountry": {$contact->country}
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": {$contact->phone},
+            "contactType": "customer service"
+        }
+    }
+
+</script>

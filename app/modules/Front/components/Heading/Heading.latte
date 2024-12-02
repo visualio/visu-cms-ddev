@@ -1,0 +1,16 @@
+{varType string $text}
+{varType string $tag}
+{varType string $class}
+
+{default $class = null}
+{default $tag = "h1"}
+
+<h1
+        n:tag="$tag"
+        n:class="'text-pretty',
+            $tag === 'h1' ? 'text-w-underline text-center text-h3 lg:text-h1 font-bold pb-[22px]',
+            $class
+        "
+>
+    {$text}
+</h1>

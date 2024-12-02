@@ -1,0 +1,61 @@
+{
+  "name": "nette/web-project",
+  "description": "Visualio app skeleton",
+  "type": "project",
+  "license": [
+    "MIT",
+    "BSD-3-Clause",
+    "GPL-2.0",
+    "GPL-3.0"
+  ],
+  "scripts": {
+    "post-create-project-cmd": [
+      "@php bin/setup.php"
+    ]
+  },
+  "require": {
+    "php": ">=8.2",
+    "nette/application": "^3.1",
+    "nette/bootstrap": "^3.1",
+    "nette/caching": "^3.1",
+    "nette/component-model": "^3.0",
+    "nette/database": "^3.1",
+    "nette/di": "^3.0",
+    "nette/finder": "^2.5",
+    "nette/forms": "^3.1",
+    "nette/http": "^3.1",
+    "nette/mail": "^3.1",
+    "nette/neon": "^3.3",
+    "nette/robot-loader": "^3.4",
+    "nette/routing": "^3.0",
+    "nette/safe-stream": "^2.5",
+    "nette/security": "^3.1",
+    "nette/schema": "^1.2",
+    "nette/utils": "^3.2",
+    "tracy/tracy": "^2.9",
+    "latte/latte": "^3.0.3",
+    "ublaboo/datagrid": "^6.9.5",
+    "ankitpokhrel/tus-php": "^2.3.0",
+    "contributte/translation": "^2.0.0",
+    "blackhexagon/latte-intelij-xml": "^1.0",
+    "ext-json": "*",
+    "ext-curl": "*",
+    "ext-pdo": "*"
+  },
+  "require-dev": {
+    "nette/tester": "^2.4",
+    "phpstan/phpstan": "^2.0",
+    "jetbrains/phpstorm-stubs": "^2024.2"
+  },
+  "autoload": {
+    "classmap": [
+      "app/bootstrap.php"
+    ]
+  },
+  "minimum-stability": "stable",
+  "config": {
+    "platform": {
+      "php": "8.2"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{varType \Datetime $datetime}
+
+<time
+    datetime="{$datetime|date:'Y-m-d'}"
+>
+    {var $monthNumber = $datetime->format('n')}
+    {_general.datetime.month.$monthNumber} {$datetime|date:'Y'}
+</time>

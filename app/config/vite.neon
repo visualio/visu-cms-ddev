@@ -1,0 +1,4 @@
+parameters:
+    vite:
+        port: 3333
+        isDockerized: false

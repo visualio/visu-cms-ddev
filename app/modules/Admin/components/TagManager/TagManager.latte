@@ -1,0 +1,79 @@
+{varType array $locales}
+{varType array $keys}
+{varType array $tags}
+{varType string $currentLocale}
+
+
+{* Multiplier *}
+<div class="uk-width-1-1">
+    {control tagForm}
+</div>
+
+<hr class="uk-margin"/>
+
+{* Lang Tab *}
+<div uk-grid>
+
+    <div class="uk-width-auto@m" n:if="$locales" n:snippet="langTab">
+        <ul
+                title="{$currentLocale}"
+                class="uk-tab-right"
+                uk-tab="connect: .tag-manager; animation: uk-animation-fade; active: {array_search($currentLocale, array_keys($locales))}"
+        >
+            <li n:foreach="$locales as $locale"><a href="#">{$locale}</a></li>
+        </ul>
+    </div>
+
+
+    {* List *}
+    <div class="uk-width-expand@m" n:snippet="list">
+        {if count($tags) === 0}
+            <p class="uk-text-center uk-text-lead uk-text-muted uk-padding">
+                Zatím jste nevytvořili žádné tagy.
+            </p>
+        {else}
+            <ul n:inner-foreach="$tags as $id => $file">
+                <li class="uk-grid-small uk-flex-middle" uk-grid>
+                    <div class="uk-switcher tag-manager uk-width-expand" n:inner-foreach="array_keys($locales) as $locale">
+                        <label>
+                            <div n:inner-foreach="$keys as $key" class="uk-grid-small" uk-grid>
+                                <div class="uk-width-expand">
+                                    <input
+                                            value="{$file->translations[$locale][$key] ?? ''}"
+                                            class="uk-input"
+                                            placeholder="{$key|capitalize}"
+                                            type="text"
+                                            name="{$key}_{$locale}_{$id}"
+                                            onchange="window.requestSnippets({
+                                                    endpoint: {link change!},
+                                                    element: this,
+                                                    body: JSON.stringify({
+                                                    id: {$id},
+                                                    key: {$key},
+                                                    locale: {$locale},
+                                                    value: this.value
+                                                    })
+                                            })"
+                                    />
+                                </div>
+                                <div class="uk-width-small">
+                                    <button
+                                            class="uk-icon-button"
+                                            uk-icon="trash"
+                                            onclick="window.requestSnippets({
+                                                    endpoint: {link delete!, $id, $locale},
+                                                    method: 'DELETE'
+                                                    })"
+                                    >
+                                    </button>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </li>
+            </ul>
+        {/if}
+    </div>
+</div>
+
+

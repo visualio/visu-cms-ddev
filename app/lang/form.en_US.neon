@@ -1,0 +1,20 @@
+field:
+	fullname: 'Full name'
+	firstname: 'Name'
+	surname: 'Surname'
+	phone: 'Phone'
+	email: 'Email'
+	message: 'Message'
+	submit: 'Send'
+	subject: 'Subject'
+	gdprConsent: 'I agree with GDPR'
+	newsletterConsent: 'I agree with getting newsletter'
+
+message:
+	required: 'Item %requiredItem% is required.'
+	requiredGdprConsent: 'In order to process the message, we need your consent to the processing of personal data.'
+	requiredNewsletterConsent: 'In order to send you a newsletter, we need your consent.'
+	errorYouAreRobot: 'The system evaluated you as a robot. If you are human, contact the administrator at error@visualio.cz. Thank you.'
+	invalidMail: 'Email is not in the correct format.'
+	sendSuccess: 'Message sucesfuly sent'
+	sendFailed: 'Sorry, the message could not be sent'  

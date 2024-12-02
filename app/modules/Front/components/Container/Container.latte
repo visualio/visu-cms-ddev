@@ -1,0 +1,12 @@
+{varType string $tag}
+{varType Latte\Runtime\Html $content}
+
+{default $tag = 'div'}
+
+<section n:tag="$tag" class="container-lg-desktop mx-auto">
+    {ifset $content}
+        {$content}
+    {else}
+        {block children}{/block}
+    {/ifset}
+</section>

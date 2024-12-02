@@ -1,0 +1,151 @@
+{varType array $files}
+{varType array $filterTags}
+{varType Nette\Database\Table\ActiveRow $record}
+{varType callable $getFileLink}
+{varType bool $canSelect}
+{varType string $selectTarget}
+
+{* Create *}
+<div class="uk-padding-small uk-margin-bottom">
+    {control fileUploader}
+    <a href="#video-modal" class="uk-button uk-button-default uk-margin-right" uk-toggle>Přidat video</a>
+    <a href="#comparison-modal" class="uk-button uk-button-default" uk-toggle>Přidat srovnání fotek</a>
+</div>
+
+{* List *}
+<form
+        data-file-manager-form
+        n:snippet="fileList"
+        action="{link select!}"
+        method="post"
+        data-ajax
+>
+    {if count($files) === 0}
+        <p class="uk-text-center uk-text-lead uk-text-muted uk-padding">
+            Zatím jste nenahráli žádné soubory.
+        </p>
+    {else}
+        {* file toolbar *}
+        <nav
+                class="uk-flex uk-flex-middle uk-padding-small uk-background-default uk-position-z-index"
+                style="position: sticky; top: var(--header-height);"
+        >
+            <fieldset data-file-manager-filter class="file-manager-filter uk-margin-auto-right">
+                <legend>
+                    Filtrovat dle tagu:
+                </legend>
+                <label>
+                    <input type="radio" name="filter" value="" checked>
+                    <span>Zobrazit vše</span>
+                </label>
+                <label n:foreach="$filterTags as $id => $tag">
+                    <input type="radio" name="filter" value="{$id}">
+                    <span>#{$tag->title}</span>
+                </label>
+            </fieldset>
+            <div class="uk-search uk-search-default uk-width-medium uk-flex-none uk-margin-large-left">
+                <label for="file-manager-search" class="uk-search-icon-flip" uk-search-icon>
+                    <span hidden>Vyhledat soubor</span>
+                </label>
+                <input id="file-manager-search" class="uk-search-input" type="search" placeholder="Vyhledat soubor"
+                       data-file-manager-search>
+            </div>
+        </nav>
+        {* file list *}
+        <ul class="js-filter uk-list uk-grid uk-grid-small uk-child-width-1-5@s">
+            <li
+                    n:foreach="$files as $id => $file"
+                    id="{$id}"
+                    class="uk-position-relative uk-margin-small-top"
+                    data-file-manager-filter-data="{$file->tags ? $file->tags . "," : ""}{$file->{App\Model\FileRepository::COLUMN_TRANSLATION_TITLE}}"
+            >
+                {* Thumbnails *}
+                <div uk-lightbox class="uk-background-primary uk-height-small uk-position-relative uk-light">
+                    {include "templates/thumbnail.latte" file: $file}
+                    {* Checkbox *}
+                    <label n:if="$canSelect" class="file-checkbox">
+                        <input name="file[]" value="{$id}" type="checkbox"/>
+                        <span>Vybrat soubor</span>
+                    </label>
+                </div>
+
+                    {* Description *}
+                    <small class="file-manager-name">
+                    {$file->{App\Model\FileRepository::COLUMN_TRANSLATION_TITLE}}
+                </small>
+
+                    {* Actions *}
+                <div class="uk-position-absolute uk-position-top-right uk-position-small">
+                    <button
+                            type="button"
+                            title="Upravit soubor"
+                            class="uk-icon-button"
+                            uk-icon="pencil"
+                            data-ajax="{link initEdit!, $id}"
+                    >
+                    </button>
+                    <a
+                            title="Zobrazit soubor"
+                            class="uk-icon-button"
+                            href="{$getFileLink($file)}"
+                            target="_blank"
+                            uk-icon="link"
+                    >
+                    </a>
+                </div>
+            </li>
+        </ul>
+        <footer n:if="$canSelect" style="position:sticky; bottom: 0" class="uk-background-default">
+            <input
+                    type="hidden"
+                    n:if="$canSelect"
+                    name="selectTarget"
+                    value="{$selectTarget}"
+            >
+            <input
+                    disabled
+                    type="submit"
+                    value="Použít vybrané soubory"
+                    class="uk-button uk-button-secondary uk-margin-top uk-margin-bottom uk-margin-right"
+            >
+            <small class="uk-text-muted">
+                pro výběr klikněte na náhled
+            </small>
+        </footer>
+    {/if}
+</form>
+
+<div id="video-modal" uk-modal="stack: true">
+    <div class="uk-modal-dialog uk-modal-body">
+        {control videoForm}
+    </div>
+</div>
+
+<div id="comparison-modal" uk-modal="stack: true">
+    <div class="uk-modal-dialog uk-modal-body">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        {control imageCompareForm}
+    </div>
+</div>
+
+<div uk-modal="stack: true" n:snippet="fileForm">
+    <div class="uk-modal-dialog" n:if="$record">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <div class="uk-modal-body uk-position-relative">
+            <h2 class="uk-modal-title">Upravit soubor</h2>
+            <a
+                    n:href="delete! $record->id"
+                    class="ajax uk-position-bottom-right uk-position-medium uk-position-z-index uk-display-block uk-button uk-button-default"
+            >
+                Smazat soubor
+            </a>
+            {control replaceUploader}
+
+            <div class="uk-padding uk-text-center uk-background-muted uk-margin-bottom">
+                {include "templates/thumbnail.latte" file: $record, ignoreThumbnail: true}
+            </div>
+
+            {control fileForm}
+        </div>
+    </div>
+</div>

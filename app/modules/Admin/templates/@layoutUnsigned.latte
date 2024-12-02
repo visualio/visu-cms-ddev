@@ -1,0 +1,16 @@
+{layout '@layout.latte'}
+
+{block body}
+    <div class="uk-section uk-section-muted uk-flex uk-flex-middle uk-animation-fade l-page">
+        <div class="uk-width-large uk-margin-auto uk-card uk-card-default uk-card-body uk-box-shadow-large">
+            <div n:foreach="$flashes as $flash" class="uk-alert-{$flash->type === 'info' ? 'success' : $flash->type}" uk-alert>
+                <a class="uk-alert-close" uk-close></a>
+                <p>{$flash->message}</p>
+            </div>
+            <div class="uk-margin-medium uk-width-small">
+                <img src="{('static/logo.png')|image}" alt="Visu CMS logo" uk-image />
+            </div>
+            {include content}
+        </div>
+    </div>
+{/block}

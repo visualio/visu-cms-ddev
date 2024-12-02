@@ -1,0 +1,23 @@
+{varType Nette\Forms\Controls\Checkbox $input}
+
+<label
+        n:name="$input->getName()"
+        class="group col-span-full flex gap-4 items-center cursor-pointer"
+>
+    <div class="relative flex-none w-5 h-5">
+        <input
+                n:name="$input->getName()"
+                type="checkbox"
+                class="appearance-none w-full h-full bg-slate-200 rounded group-hover:bg-slate-500 checked:bg-slate-900 transition-colors checked:border-transparent"
+        >
+        <span class="absolute inset-0 w-full h-full text-white flex items-center justify-center p-1">
+            {include .Icon,
+                key: "x",
+                size: $SIZE::SM
+            }
+        </span>
+    </div>
+    <span class="flex-1">
+        {$input->getCaption()}
+    </span>
+</label>

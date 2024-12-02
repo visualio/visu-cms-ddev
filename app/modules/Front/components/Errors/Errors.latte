@@ -1,0 +1,9 @@
+{varType array $items}
+
+<ul
+        class="bg-red-200 text-red-800 p-4"
+        n:if="count($items) > 0"
+        n:inner-foreach="$items as $error"
+>
+    <li>{$error}</li>
+</ul>

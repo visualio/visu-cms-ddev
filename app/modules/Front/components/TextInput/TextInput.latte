@@ -1,0 +1,5 @@
+{varType Nette\Forms\Controls\TextInput $input}
+
+{embed .InputGroup input: $input}
+    <input n:block="children" n:name="$input->getName()" class="p-2 border">
+{/embed}

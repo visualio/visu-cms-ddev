@@ -1,0 +1,9 @@
+parameters:
+  level: 0
+  paths:
+    - app
+  bootstrapFiles:
+    - vendor/autoload.php
+    - app/bootstrap.php
+  scanDirectories:
+    - vendor/jetbrains/phpstorm-stubs

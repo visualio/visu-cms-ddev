@@ -1,0 +1,14 @@
+{templateType App\FrontModule\Types\BaseTemplate}
+
+<nav class="social-icons flex gap-4">
+    <a
+        n:foreach="$socialLinks as $key => $item"
+        href="{$item}"
+        target="_blank"
+    >
+        {include .Icon,
+            key: $key,
+            size: $SIZE::MD,
+        }
+    </a>
+</nav>

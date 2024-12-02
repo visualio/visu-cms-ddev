@@ -1,0 +1,36 @@
+{*
+ * @param Paginator $paginator
+ * @param array     $steps
+ * @param string    $iconPrefix
+ *}
+
+{var $link = [$control->getParent(), link]}
+
+
+
+<ul n:if="$paginator->pageCount > 1" class="uk-pagination uk-flex-center" uk-margin>
+
+	{if $paginator->isFirst()}
+		<li class="uk-disabled"><a href="#"><span uk-pagination-previous></span></a></li>
+	{else}
+		<li><a class="ajax" href="{$link('page!', ['page' => $paginator->page - 1])}" rel="prev"><span uk-pagination-previous></span></a></li>
+	{/if}
+
+	{foreach $steps as $step}
+		{if $step == $paginator->page}
+			<li class="uk-active"><span>{$step}</span></li>
+		{else}
+			<li><a href="{$link('page!', ['page' => $step])}" class="ajax">{$step}</a></li>
+		{/if}
+		{if $iterator->nextValue > $step + 1}
+			<li class="uk-disabled"><span>...</span></li>
+		{/if}
+	{/foreach}
+
+	{if $paginator->isLast()}
+		<li class="uk-disabled"><a href="#"><span uk-pagination-next></span></a></li>
+	{else}
+		<li><a class="ajax" href="{$link('page!', ['page' => $paginator->page + 1])}" rel="next"><span uk-pagination-next></span></a></li>
+	{/if}
+
+</ul>

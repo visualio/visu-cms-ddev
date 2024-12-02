@@ -1,0 +1,50 @@
+{varType Nette\Forms\Controls\BaseControl $input}
+
+{if $input instanceof Nette\Forms\Controls\HiddenField}
+    {input $input}
+{else}
+    <div
+            n:class="$input->getOption('width') ? 'uk-width-' . $input->getOption('width') : null, $input->getOption('class')"
+            {if $input->getOption(id)}id="{$input->getOption(id)}"{/if}
+    >
+        <label for="{$input->getHtmlId()}" class="uk-form-label" n:if="$input->getLabel()">
+            {$input->getCaption()}<sup n:if="$input->isRequired()">*</sup>
+        </label>
+        {if $input instanceof App\AdminModule\Forms\Controls\ImageUploadEditorControl}
+            {input $input}
+        {elseif $input instanceof Nette\Forms\Controls\MultiSelectBox}
+            {input $input, class: "js-select uk-select", data-order: join(',', $input->getValue())}
+        {elseif $input instanceof Nette\Forms\Controls\SelectBox}
+            {input $input, class: "uk-select"}
+        {elseif $input instanceof App\AdminModule\Forms\Controls\UppyControl}
+            {input $input}
+        {elseif $input instanceof Nette\Forms\Controls\SubmitButton}
+            {input $input class: "uk-button uk-button-large uk-button-primary " . ($input->getOption('isCompact') ? 'uk-margin-top' : 'uk-margin-large-top')}
+        {elseif $input instanceof Nette\Forms\Controls\UploadControl}
+            {include "../../DropZone/DropZone.latte" input: $input, isMultiple: $input->getControl()->multiple}
+        {elseif $input instanceof Nette\Forms\Controls\Button}
+            {input $input class: "uk-button uk-button-default"}
+        {elseif $input instanceof Nette\Forms\Controls\Checkbox}
+            <label>
+                <input type="checkbox" n:name="$input" class="uk-checkbox">
+                <span style="margin-left: 5px">{$input->getCaption()}</span>
+            </label>
+        {elseif $input instanceof Nette\Forms\Controls\RadioList}
+            <div class="uk-flex-inline uk-margin-left">
+                {foreach $input->getItems() as $key => $item}
+                    <label n:class="!$iterator->isFirst() ? 'uk-margin-left'">
+                        <input n:name="$input:$key" class="uk-radio" style="margin-right: 10px">&nbsp;{$item}
+                    </label>
+                {/foreach}
+            </div>
+        {elseif $input instanceof Nette\Forms\Controls\TextArea}
+            {input $input class: $input->getControl()->getAttribute('class') ?: 'uk-textarea'}
+        {else}
+            {input $input class: $input->getControl()->getAttribute('class') ?: 'uk-input'}
+        {/if}
+
+        <p class="uk-text-muted uk-text-small" n:ifcontent>
+            {$input->error ?: $input->getOption(description)}
+        </p>
+    </div>
+{/if}

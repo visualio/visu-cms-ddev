@@ -1,0 +1,7 @@
+{varType Nette\Forms\Controls\BaseControl $input}
+
+<label class="flex flex-col gap-2">
+    <span class="block">{$input->getCaption()}</span>
+    {block children}{/block}
+    {include .Errors items: $input->getErrors()}
+</label>

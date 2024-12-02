@@ -1,0 +1,55 @@
+@import "../../../../../node_modules/@uppy/core/dist/style.css";
+@import "../../../../../node_modules/@uppy/status-bar/dist/style.css";
+
+/* drag & drop */
+.uppy-DragDrop-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  max-width: 100%;
+  background: white;
+  font-family: inherit;
+}
+
+.uppy-DragDrop-container:focus {
+  outline: none;
+}
+
+.uppy-DragDrop-inner {
+  margin: 0;
+  text-align: center;
+  padding: 40px 20px;
+  line-height: 1.4;
+}
+
+.uppy-DragDrop-arrow {
+  display: none;
+}
+
+.uppy-DragDrop--isDragDropSupported {
+  border: 1px dashed #e5e5e5;
+}
+
+.uppy-DragDrop--isDraggingOver {
+  border: 1px dashed #2275d7;
+  background: #eaeaea;
+}
+
+.uppy-DragDrop-label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.uppy-DragDrop-browse {
+  color: #2275d7;
+  cursor: pointer;
+}
+
+.uppy-DragDrop-note {
+  color: #adadad;
+}
+
+[data-uppy] .result:not(:empty) {
+  margin-top: 10px;
+}

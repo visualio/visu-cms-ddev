@@ -1,0 +1,14 @@
+{layout '../@layoutSginedIn.latte'}
+{define metaTitle}Články{/define}
+
+{block content}
+    {snippet test}
+        {control articleForm}
+    {/snippet}
+    {embed '../../components/Modal/Modal.latte', id: 'fileManagerModal', title: 'Správce souborů'}
+        {block body}{control fileManager}{/block}
+    {/embed}
+    {embed '../../components/Modal/Modal.latte', id: 'tagManagerModal', title: 'Správce tagů'}
+        {block body}{control tagManager}{/block}
+    {/embed}
+{/block}

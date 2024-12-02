@@ -1,0 +1,87 @@
+@layer utilities {
+  /* CONTAINER */
+  .container-mobile,
+  .container-lg-mobile,
+  .container-tablet,
+  .container-lg-table,
+  .container-desktop,
+  .container-lg-desktop {
+    @apply relative w-full mx-auto;
+  }
+
+  .container-mobile {
+    @apply max-w-[calc(theme('screens.mobile')+(2*24px))] px-24px;
+  }
+  .container-lg-mobile {
+    @apply max-w-[calc(theme('screens.lg-mobile')+(2*24px))] px-24px;
+  }
+  .container-tablet {
+    @apply max-w-[calc(theme('screens.tablet')+(2*24px))] px-24px;
+  }
+  .container-lg-table {
+    @apply max-w-[calc(theme('screens.lg-tablet')+(2*24px))] px-24px;
+  }
+  .container-desktop {
+    @apply max-w-[calc(theme('screens.desktop')+(2*24px))] px-24px;
+  }
+  .container-lg-desktop {
+    @apply max-w-[calc(theme('screens.lg-desktop')+(2*24px))] px-24px;
+  }
+  .container-center {
+    @apply flex justify-center px-24px;
+  }
+
+  .absolute-fit {
+    @apply absolute top-0 left-0 w-full h-full;
+  }
+
+  .image-cover {
+    @apply absolute-fit object-cover;
+  }
+
+  .size-full {
+    @apply w-full h-full;
+  }
+
+  .center-hw {
+    @apply pt-[.2em];
+  }
+
+  .bounce {
+    animation: bounce 2s ease;
+  }
+
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+    40% {transform: translateY(-30px);}
+    60% {transform: translateY(-15px);}
+  }
+}
+
+[x-cloak] { display: none !important; }
+
+a.disabled {
+  @apply pointer-events-none;
+}
+
+.article-item {
+  
+  &:before {
+    content: "";
+    position: absolute;
+
+    @media (min-width: theme('screens.lg-tablet')) {
+      bottom: -24px;
+        left: -24px;
+        right: -18px;
+        top: -24px;
+        z-index: -1;
+    }
+  }
+  
+  &:hover {
+    &:before {
+      background: linear-gradient(0deg, rgba(27, 139, 234, .1), rgba(27, 139, 234, .1)), #fff;
+    }
+  }
+}

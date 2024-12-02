@@ -1,0 +1,28 @@
+{varType Nette\Forms\Controls\RadioList $input}
+{varType string $id}
+
+<header class="uk-flex uk-flex-between uk-margin-top multiplier-head">
+    <ul
+            uk-tab="animation: uk-animation-fade ; connect: #{$id} > .uk-switcher; toggle: > li > a; active: {array_search($input->value, array_keys($input->items)) ?: 0}"
+    >
+        {foreach $input->items as $key => $item}
+            <li data-sortable-key="{$key}">
+                <a href="#" onclick="this.nextElementSibling.checked = true">
+                    {$item}
+                    <span uk-icon="icon: table" class="uk-margin-small-left uk-sortable-handle"></span>
+                </a>
+                <input
+                        class="uk-hidden"
+                        type="radio"
+                        name="{$input->getHtmlName()}"
+                        value="{$key}"
+                        {if $key === $input->value}checked{/if}
+                >
+            </li>
+        {/foreach}
+    </ul>
+    <a href="{$input->getOption(link)}" class="ajax uk-button uk-button-small uk-button-secondary uk-flex-inline uk-flex-middle">
+        <span uk-icon="icon: plus-circle; ratio: 0.9"></span>
+        <span>&nbsp;&nbsp;{$input->caption}</span>
+    </a>
+</header>

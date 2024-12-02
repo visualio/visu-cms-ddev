@@ -1,0 +1,5 @@
+{templateType App\FrontModule\Components\BreadcrumbsTemplate}
+
+<nav n:foreach="$items as $item">
+    <a href="{$item->linkUrl}">{$item->linkText}</a>
+</nav>

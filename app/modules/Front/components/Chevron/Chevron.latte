@@ -1,0 +1,19 @@
+{templateType App\FrontModule\Types\BaseTemplate}
+{varType App\Templates\Types\Size $size}
+{varType App\Templates\Types\Orientation $orientation}
+
+{default $size = $SIZE::MD}
+{default $orientation = $ORIENTATION::RIGHT}
+
+<span
+    aria-hidden="true"
+    n:class="
+        $orientation->isRight() ? '',
+        $orientation->isLeft() ? 'rotate-180',
+        $orientation->isTop() ? 'rotate-90',
+        $orientation->isBottom() ? '-rotate-90',
+        'transform ease-wind transition-transform duration-300 inline-grid place-content-center'
+    "
+>
+    {include .Icon, key: 'chevron', size: $size}
+</span>

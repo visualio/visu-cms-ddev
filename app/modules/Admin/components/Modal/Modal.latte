@@ -1,0 +1,10 @@
+{varType string $id}
+{varType string $title}
+
+<div id="{$id}" uk-modal class="uk-modal-container">
+    <div class="uk-modal-dialog uk-modal-body">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <h2 class="uk-modal-title">{$title}</h2>
+        {block body}{/block}
+    </div>
+</div>

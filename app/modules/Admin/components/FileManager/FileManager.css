@@ -1,0 +1,128 @@
+.yt-preview {
+  background: none;
+  border: none;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  cursor: pointer;
+}
+
+.yt-preview:after {
+  content: "▶";
+  color: white;
+  font-size: 20px;
+  line-height: 20px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.image-preview img,
+.yt-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.compare-thumbnail {
+  background: none;
+  border: none;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  cursor: pointer;
+  display: inline-flex;
+}
+
+.compare-thumbnail img {
+  width: 50%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.file-checkbox {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.file-checkbox input {
+  visibility: hidden;
+}
+
+.file-checkbox span {
+  color: transparent;
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+.file-checkbox input:checked + span:after {
+  content: "☑";
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  font-size: 24px;
+  line-height: 1;
+  bottom: 10px;
+  left: 10px;
+}
+
+.file-manager-name {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.file-manager-filter {
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.file-manager-filter legend {
+  float: left;
+  padding: 5px 20px 5px 0;
+}
+
+.file-manager-filter label + label {
+  margin-left: 10px;
+}
+
+.file-manager-filter input {
+  display: none;
+}
+
+.file-manager-filter span {
+  display: inline-block;
+  padding: 5px 10px;
+  cursor: pointer;
+  color: #999;
+  text-transform: uppercase;
+  transition: 0.1s ease-in-out;
+  transition-property: color, background-color;
+}
+
+.file-manager-filter span:hover {
+  background-color: #f8f8f8;
+  color: #666;
+}
+
+.file-manager-filter input:checked + span {
+  background-color: #1e87f0;
+  color: #fff;
+}

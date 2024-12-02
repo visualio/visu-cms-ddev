@@ -1,0 +1,8 @@
+{varType Nette\Forms\Controls\TextInput $input}
+
+<button
+        type="submit"
+        n:name="$input->getName()"
+>
+    {include .ButtonBase text: $input->getCaption()}
+</button>

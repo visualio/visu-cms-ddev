@@ -1,0 +1,19 @@
+{varType string $localeDefault}
+{varType array $locales}
+{varType array $data}
+{varType string $saveUrl}
+{varType string $editUrl}
+
+{var string $settings = json_encode([
+'localeDefault' => $localeDefault,
+'locales' => $locales,
+'data' => $data,
+'urls' => [
+    'save' => $saveUrl,
+    'edit' => $editUrl
+]
+])}
+
+<div data-uk-tree="{$settings}">
+    <span uk-spinner></span>
+</div>

@@ -1,0 +1,15 @@
+{varType array $navItem}
+{varType string $cta}
+
+<header class="uk-margin-bottom">
+    <h1 n:block="title">
+        {$navItem->title}
+    </h1>
+    <a
+            n:if="$presenter->canCreate(false) && isset($navItem->cta)"
+            class="uk-button uk-button-primary uk-button-large"
+            href="{$cta ?? $presenter->link('edit')}"
+    >
+        {$navItem->cta}
+    </a>
+</header>

@@ -1,0 +1,6 @@
+{varType string $name}
+
+<form n:name="$name" class="space-y-4">
+    {include .Errors items: $form->getOwnErrors()}
+    {block children}{/block}
+</form>

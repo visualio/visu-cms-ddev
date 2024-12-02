@@ -1,0 +1,4 @@
+switchTo: 'Switch to %lang%'
+language:
+  cs: 'czech'
+  en: 'english'

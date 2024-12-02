@@ -1,0 +1,38 @@
+#Require all denied
+
+#vardump
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+#
+#	###################################################
+#	#Old pages redirects
+#	###################################################
+#	#Redirect 301 /oldpage.html http://www.example.com/newpage.html
+#
+#
+#  ###################################################
+#	#Redirect to https and non-www
+#	###################################################
+#	#RewriteCond %{HTTPS} off [OR]
+#  #RewriteCond %{HTTP_HOST} ^www\. [NC]
+#  #RewriteCond %{HTTP_HOST} ^(?:www\.)?(.+)$ [NC]
+#  #RewriteRule ^ https://%1%{REQUEST_URI} [L,NE,R=301]
+#
+#  ###################################################
+#	#Redirect to https and www
+#	###################################################
+#  #RewriteCond %{HTTPS} off [OR]
+#  #RewriteCond %{HTTP_HOST} !^www\. [NC]
+#  #RewriteCond %{HTTP_HOST} ^(?:www\.)?(.+)$ [NC]
+#  #RewriteRule ^ https://www.%1%{REQUEST_URI} [L,NE,R=301]
+#
+#
+#	###################################################
+#	#Set index folder
+#	###################################################
+	RewriteRule ^$ /www/ [L]
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_URI} !^/www/
+	RewriteRule ^(.*)$ /www/$1
+</IfModule>

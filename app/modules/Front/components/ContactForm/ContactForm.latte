@@ -1,0 +1,13 @@
+{embed .Form name: 'form'}
+    <fieldset class="space-y-4" n:block="children">
+        {include .TextInput input: $form[$control::FIELD_NAME]}
+        {include .TextInput input: $form[$control::FIELD_EMAIL]}
+        {include .TextInput input: $form[$control::FIELD_PHONE]}
+        {include .TextArea input: $form[$control::FIELD_MESSAGE]}
+        {include .Checkbox input: $form[$control::FIELD_GDPR]}
+        {include .Checkbox input: $form[$control::FIELD_CONSENT]}
+        {include .ButtonSubmit input: $form[$control::FIELD_SUBMIT]}
+        {include .Recaptcha}
+    </fieldset>
+{/embed}
+

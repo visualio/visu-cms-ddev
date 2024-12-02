@@ -1,0 +1,43 @@
+{varType string $id}
+{varType string $note}
+{varType string $inputControl}
+{varType string $uploadEndpoint}
+{varType string $successEndpoint}
+{varType string $removeEndpoint}
+{varType string $sortEndpoint}
+{varType bool $isMultiple}
+{varType array $restrictions}
+{varType array $files}
+{varType callable $onThumbnailRender}
+{varType string $adapter}
+
+{var $settings = json_encode([
+    'uploadEndpoint' => $uploadEndpoint,
+    'successEndpoint' => $successEndpoint,
+    'removeEndpoint' => $removeEndpoint,
+    'allowMultipleUploads' => $isMultiple,
+    'id' => $id,
+    'restrictions' => $restrictions,
+    'adapter' => $adapter,
+    'note' => $note ?? '',
+])}
+
+<div data-uppy="{$settings}">
+    <div class="area"></div>
+    <div class="status"></div>
+    <ul
+            class="result uk-list uk-list-divider ajax"
+            id="{$id}-list"
+            data-callback="{$sortEndpoint}"
+            uk-sortable
+    >
+        {include 'templates/files.latte'
+            files: $files,
+            showRemoveButton: $removeEndpoint !== null,
+            onThumbnailRender: $onThumbnailRender
+        }
+    </ul>
+    <div class="input uk-hidden" id="{$id}-input">
+        {$inputControl|noescape}
+    </div>
+</div>

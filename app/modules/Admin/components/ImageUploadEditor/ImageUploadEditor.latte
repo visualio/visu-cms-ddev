@@ -1,0 +1,42 @@
+{varType Nette\Utils\Html $inputControl}
+{varType string $source}
+
+<div class="image-editor">
+    {*  file input  *}
+    {include '../DropZone/DropZone.latte', isMultiple: false, input: '<input type="file">'}
+    {*  text input  *}
+    <div class="uk-hidden">
+        {$inputControl|noescape}
+    </div>
+    {*  thumbnail  *}
+    <div {if !$source}hidden{/if} class="uk-width-medium uk-position-relative uk-margin-small-top" data-thubmnail>
+        <button
+                type="button"
+                class="uk-button uk-button-link"
+                title="Upravit obrázek"
+                data-edit
+        >
+            <img
+                    class="uk-width-1-1"
+                    src="
+                        {if $source}
+                            {if App\Model\Utils::isBase64Image($source)}{$source}{else}{$source|image}{/if}
+                        {else}
+                            data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAoMBgDTD2qgAAAAASUVORK5CYII=
+                        {/if}
+                    "
+                    alt="Náhled obrázku"
+            >
+        </button>
+        <button
+                title="Smazat obrázek"
+                type="button"
+                class="uk-button uk-button-small uk-position-top-right uk-button-danger"
+                data-delete
+        >
+            <span uk-icon="icon: trash"></span>
+        </button>
+    </div>
+    {* spinnner *}
+    <div uk-spinner="ratio:2"></div>
+</div>

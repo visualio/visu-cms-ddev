@@ -1,0 +1,20 @@
+{varType string $key}
+{varType App\Templates\Types\Size $size}
+
+
+<svg
+  n:class="
+    $size->isXS() ? 'w-2 h-2',
+    $size->isSM() ? 'w-4 h-4',
+    $size->isMD() ? 'w-6 h-6',
+    $size->isLG() ? 'w-10 h-10',
+    $size->isXL() ? 'w-14 h-14',
+    'flex-shrink-0 fill-current inline-block max-w-full max-h-full'
+  "
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 24 24"
+  width="24"
+  aria-hidden="true"
+>
+  <use xlink:href="{$basePath}/dist/front/sprite.svg#{$key}"></use>
+</svg>

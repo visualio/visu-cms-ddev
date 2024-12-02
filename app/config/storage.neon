@@ -1,0 +1,53 @@
+parameters:
+    storage:
+        dir: 'assets'
+        sizes:
+            xl: [352, 248]
+            lg: [256, 180]
+            md: [350, 200]
+            sm: [104, 104]
+            xs: [72, 72]
+        aliases:
+            160:
+                resize: [160, null, Nette\Utils\Image::FIT]
+            320:
+                resize: [320, null, Nette\Utils\Image::FIT]
+            480:
+                resize: [480, null, Nette\Utils\Image::FIT]
+            640:
+                resize: [640, null, Nette\Utils\Image::FIT]
+            768:
+                resize: [768, null, Nette\Utils\Image::FIT]
+            1024:
+                resize: [1024, null, Nette\Utils\Image::FIT]
+            1366:
+                resize: [1366, null, Nette\Utils\Image::FIT]
+            1600:
+                resize: [1600, null, Nette\Utils\Image::FIT]
+            1920:
+                resize: [1920, null, Nette\Utils\Image::FIT]
+            square32:
+                resize: [32, 32, Nette\Utils\Image::EXACT]
+            square160:
+                resize: [160, 160, Nette\Utils\Image::EXACT]
+            square320:
+                resize: [320, 320, Nette\Utils\Image::EXACT]
+            square480:
+                resize: [480, 480, Nette\Utils\Image::EXACT]
+            thumbnail:
+                resize: [320, 200, Nette\Utils\Image::EXACT]
+            thumbnailSplit:
+                resize: [320, 200, Nette\Utils\Image::EXACT]
+            uppy:
+                resize: [48, 48, Nette\Utils\Image::EXACT]
+            xl:
+                resize: [%storage.sizes.xl.0%, %storage.sizes.xl.1%, Nette\Utils\Image::EXACT]
+            lg:
+                resize: [%storage.sizes.lg.0%, %storage.sizes.lg.1%, Nette\Utils\Image::EXACT]
+            md:
+                resize: [%storage.sizes.md.0%, %storage.sizes.md.1%, Nette\Utils\Image::EXACT]
+            sm:
+                resize: [%storage.sizes.sm.0%, %storage.sizes.sm.1%, Nette\Utils\Image::EXACT]
+            xs:
+                resize: [%storage.sizes.xs.0%, %storage.sizes.xs.1%, 72, Nette\Utils\Image::EXACT]
+        srcset: [640, 768, 1024, 1366, 1600, 1920]

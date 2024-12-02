@@ -1,0 +1,12 @@
+parameters:
+    contact:
+        email: 'info@visu.cz'
+        phone: ''
+        title: 'Visualio CMS'
+        name: 'Visualio'
+        street: 'Klimentská 36'
+        city: 'Praha'
+        postCode: '110 00'
+        country: 'Czech republic'
+        crn: ''
+        vatId: ''

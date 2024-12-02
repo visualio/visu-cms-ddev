@@ -1,0 +1,7 @@
+mail:
+    smtp: true
+    host: smtp.gmail.com
+    username: yourtestaccount@gmail.com
+    password: yourtestpwd
+    secure: ssl
+    port: 465

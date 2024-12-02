@@ -1,0 +1,51 @@
+.col-action.col-action {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.col-action .disabled {
+  pointer-events: none;
+
+}
+.col-checkbox.col-checkbox {
+  width: 32px;
+}
+
+td[class*="col-"]:first-child {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 320px;
+}
+
+.datagrid-col-filter-date-range {
+  display: flex;
+  align-items: center;
+}
+
+.datagrid-col-filter-date-range .input-group,
+.datagrid-col-filter-date-range input {
+  width: 80px;
+}
+
+.uk-icon-caret-down:before {
+  content: "▼";
+}
+
+.uk-icon-caret-up:before {
+  content: "▲";
+}
+
+/* simulate table row appearance */
+.uk-sortable-drag {
+  display: flex;
+  align-items: center;
+  color: transparent;
+}
+
+.uk-sortable-drag > a:first-child {
+  margin-right: auto;
+  color: #1e87f0;
+}

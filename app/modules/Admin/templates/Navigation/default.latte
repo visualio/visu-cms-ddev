@@ -1,0 +1,13 @@
+{templateType App\AdminModule\Templates\BaseTemplate}
+{layout '../@layoutSginedIn.latte'}
+
+{block content}
+	<h1>{$navItem->title}</h1>
+	{include "../../components/SortableTree/SortableTree.latte"
+		localeDefault: $localeDefault,
+		locales: [["cs", "Čeština"], ["en", "Angličtina"]],
+		data: $data,
+		saveUrl: $presenter->link('save!'),
+		editUrl: $presenter->link('edit'),
+	}
+{/block}

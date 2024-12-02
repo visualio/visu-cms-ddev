@@ -1,0 +1,25 @@
+{templateType App\FrontModule\Types\BaseTemplate}
+
+{varType string $id}
+{varType string $text}
+{varType string $link}
+{varType string $title}
+{varType string $target}
+{varType string $type}
+{varType string $action}
+
+{var array $attributes = [
+    'id' => $id ?? null,
+    'title' => $title ?? null,
+    'href' => $link ?? null,
+    'target' => $target ?? null,
+    'type' => $type ?? (empty($link) ? "button" : null),
+    'action' => $action ?? null,
+]}
+
+<button
+    n:tag="isset($link) ? 'a' : null"
+    n:attr="$attributes"
+>
+    {include .ButtonBase text: $text}
+</button>

@@ -1,0 +1,114 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@import "layout.scss";
+@import "typography.scss";
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    /* Bold text */
+    .font-bold {
+        font-weight: 700;
+    }
+
+    /* Navigation styles */
+    .nav-primary__menu,
+    .nav-primary__navbar {
+        background: linear-gradient(90deg, #41bff7 .17%, rgba(65, 191, 247, 0) 97.48%),
+        linear-gradient(90deg, rgba(27, 139, 234, 0) 23.12%, #1b8bea),
+        #0a58a5;
+    }
+
+    /* Add custom styles here */
+    .custom-shadow {
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    /* You can override or extend Tailwind classes here */
+    .hover-effect:hover {
+        transform: translateY(-2px);
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .hover\:bg-nav-hover:hover {
+        background-color: rgba(10, 88, 165, .4);
+    }
+
+    .bg-nav-active {
+        background-color: rgba(10, 88, 165, .7);
+    }
+
+    .shadow-card-shadow {
+        --tw-shadow: 0px 4px 160px 0px rgba(0, 0, 0, .09);
+        --tw-shadow-colored: 0px 4px 160px 0px var(--tw-shadow-color);
+        box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    }
+
+    .arrow-circle-link,
+    .shadow-card-shadow {
+        --tw-backdrop-blur: blur(40px);
+        -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+        backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+    }
+
+    .sub-hero-bg {
+        --tw-backdrop-blur: blur(40px);
+        -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+        backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+        background: hsla(0, 0%, 100%, .6);
+    }
+
+    .bg-default-fill-color {
+        --tw-bg-opacity: 1;
+        background-color: rgb(51 51 51 / var(--tw-bg-opacity));
+    }
+
+    .btn-primary {
+        background: linear-gradient(90deg, #41bff7 .17%, rgba(65, 191, 247, 0) 97.48%), linear-gradient(90deg, rgba(27, 139, 234, 0) 23.12%, #1b8bea), #0a58a5;
+        width: -moz-fit-content;
+        width: fit-content;
+    }
+
+    .btn-primary-hover,
+    .btn-primary:hover {
+        background: linear-gradient(70deg, rgba(65, 191, 247, 0), rgba(65, 191, 247, 0)), linear-gradient(250deg, rgba(10, 88, 165, 0), #0a58a5), #1b8bea;
+    }
+
+    .text-btn {
+        font-size: 1.25rem;
+        letter-spacing: .4px;
+        line-height: 100%;
+    }
+
+    .grid-flow-col {
+        grid-auto-flow: column;
+    }
+
+    .auto-cols-max {
+        grid-auto-columns: max-content;
+    }
+
+    .hover-bold-change {
+        display: inline-block;
+        position: relative;
+    }
+
+    .hover-bold-change:after {
+        content: attr(data-text);
+        display: block;
+        font-weight: 700;
+        height: 0;
+        overflow: hidden;
+        visibility: hidden;
+    }
+
+    .text-white.text-base.md\:text-base-desktop {
+        display: inline-block;
+        width: max-content;
+    }
+}

@@ -1,0 +1,7 @@
+{layout '../@layoutSginedIn.latte'}
+
+{block content}
+<h1 class="error-intro-title" n:block="metaTitle">{_Error4xx.$errorCode.title|noescape}</h1>
+<p>{$errorCode}</p>
+<p class="error-intro-text">{_Error4xx.$errorCode.message|noescape}</p>
+{/block}

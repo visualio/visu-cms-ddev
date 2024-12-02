@@ -1,0 +1,20 @@
+field:
+	fullname: 'Celé jméno'
+	firstname: 'Jméno'
+	surname: 'Příjmení'
+	phone: 'Telefon'
+	email: 'Email'
+	message: 'Zpráva'
+	submit: 'Odeslat'
+	subject: 'Předmět'
+	gdprConsent: 'Souhlas s GDPR'
+	newsletterConsent: 'Souhlas se zesíláním newsletteru'
+
+message:
+	required: 'Položka %requiredItem% je povinná.'
+	requiredGdprConsent: 'Abychom mohli zprávu zpracovat, potřebujeme Váš souhlas se zpracováním osobních údajů.'
+	requiredNewsletterConsent: 'Abychom Vám mohli zasílat newsletter, potřebujeme Váš souhlas.'
+	errorYouAreRobot: 'Systém vás vyhodnotil jako robota. Pokud jste člověk, kontaktujte administrátora na error@visualio.cz. Děkujeme.'
+	invalidMail: 'Email není ve správném formátu.'
+	sendSuccess: 'Zpráva úspěšně odeslána'
+	sendFailed: 'Bohužel se zprávu nepodařilo odeslat'

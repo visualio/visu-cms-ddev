@@ -1,0 +1,15 @@
+search:
+    front:
+        in: %appDir%/modules/Front/components
+        classes:
+            - *Factory
+            - *Component
+    admin:
+        in: %appDir%/modules/Admin/components
+        classes:
+            - *Factory
+            - *Component
+    model:
+        in: %appDir%/model
+        classes:
+            - *Repository

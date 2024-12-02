@@ -1,0 +1,14 @@
+{varType string $tag}
+{varType bool $isContained}
+
+{default $isContained = true}
+{default $tag = 'section'}
+
+<section n:tag="$tag" class="py-8">
+    {if $isContained}
+        {capture $content}{include children}{/capture}
+        {include .Container content: $content}
+    {else}
+        {block children}{/block}
+    {/if}
+</section>

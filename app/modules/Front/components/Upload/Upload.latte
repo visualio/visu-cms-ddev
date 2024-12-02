@@ -1,0 +1,7 @@
+{varType Nette\Forms\Controls\UploadControl $input}
+
+{embed .InputGroup}
+    {block children}
+        <input type="file" n:name="$input->getName()">
+    {/block}
+{/embed}

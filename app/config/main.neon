@@ -1,0 +1,36 @@
+includes:
+    - services.neon
+    - storage.neon
+    - links.neon
+    - keys.neon
+    - social.neon
+    - contact.neon
+    - search.neon
+    - translation.neon
+    - mail.neon
+    - mail.local.neon
+    - database.local.neon
+    - vite.neon
+    - vite.local.neon
+
+application:
+    errorPresenter: Error
+    # catchExceptions: true
+    mapping:
+        *: App\*Module\Presenters\*Presenter
+
+session:
+    expiration: 14 days
+
+tracy:
+    email: error@visu.cz
+    showLocation: true
+    maxDepth: 10
+
+http:
+    headers:
+        X-Powered-By: Visu CMS # for security sake
+
+extensions:
+    translation: Contributte\Translation\DI\TranslationExtension
+    ddevDatabase: App\Extensions\DdevDatabaseExtension

@@ -1,0 +1,6 @@
+parameters:
+    keys:
+        gtm: '' #for all tracking scripts use Google Tag Manager
+        recaptcha:
+            public: '6LcUjBAaAAAAAPe2YD-C1dLRN4rs9cop1C45TsqM' # only to use on visu-cms
+            secret: '6LcUjBAaAAAAAMfLkgBhWhhM_xrTouqx6waNro-U' # only to use on visu-cms

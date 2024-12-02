@@ -1,0 +1,53 @@
+{varType string $source}
+{varType string $alt}
+{varType string $fetchPriority}
+{varType bool $lazyLoad}
+{varType bool $class}
+
+{default $lazyLoad = isset($fetchPriority) ? false : true}
+
+{var string $className = $class ? 'h-[inherit] w-[inherit] ' . $class : 'h-[inherit] w-[inherit]'}
+
+{var array $attributes = [
+    'alt' => $alt,
+    'fetchPriority' => $fetchPriority ?? null,
+    'loading' => $lazyLoad ? 'lazy' : null,
+    'decoding' => $lazyLoad ? 'async' : null,
+    'class' => $className
+]}
+
+{if Nette\Utils\Strings::contains($source, '/')}
+    {* it cotains a namespace, eg: article/[hash].jpg *}
+    <img
+            src="{$source|image}"
+            srcset="{$source|srcset}"
+            n:attr="$attributes"
+    />
+{else}
+    {* it is a filename from dev/front/images *}
+    {var string $path = $basePath . '/dist/front/images/'}
+    {if Nette\Utils\Strings::endsWith($source, 'svg') || Nette\Utils\Strings::endsWith($source, 'gif') || Nette\Utils\Strings::endsWith($source, 'png')}
+        {* svg and gif images do not have variants *}
+        <img
+                src="{$path . $source}"
+                n:attr="$attributes"
+        />
+    {else}
+        {* use picture element with modern image types *}
+        {var string $filename = pathinfo($source, PATHINFO_FILENAME)}
+        <picture class="{$className}">
+            <source
+                    type="image/avif"
+                    srcset="{$path . $filename . '.avif'}"
+            />
+            <source
+                    type="image/webp"
+                    srcset="{$path . $filename . '.webp'}"
+            />
+            <img
+                    src="{$path . $source}"
+                    n:attr="$attributes"
+            />
+        </picture>
+    {/if}
+{/if}

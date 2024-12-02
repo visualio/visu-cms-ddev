@@ -1,0 +1,6 @@
+# for ddev leave blank
+
+#database:
+#	dsn: 'mysql:host=localhost;dbname=visucms'
+#	user: root
+#	password:

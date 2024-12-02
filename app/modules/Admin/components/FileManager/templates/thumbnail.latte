@@ -1,0 +1,53 @@
+{varType \stdClass $file}
+{varType callable $getFileLink}
+{varType bool $ignoreThumbnail}
+
+{var array $iconMap = [
+    App\Model\FileRepository::FILE_TYPE_FILE => 'file-text',
+    App\Model\FileRepository::FILE_TYPE_IMAGE => 'image',
+    App\Model\FileRepository::FILE_TYPE_VIDEO => 'video-camera',
+    App\Model\FileRepository::FILE_TYPE_VIMEO => 'video-camera',
+]}
+
+{default $ignoreThumbnail = false}
+
+{var string $id = $file->{App\Model\FileRepository::COLUMN_PRIMARY_ID}}
+{var string $source = $file->{App\Model\FileRepository::COLUMN_PRIMARY_SOURCE}}
+{var string $type = $file->{App\Model\FileRepository::COLUMN_PRIMARY_TYPE}}
+{var string $thumb = $file->{App\Model\FileRepository::COLUMN_PRIMARY_THUMBNAIL}}
+
+{if $thumb && !$ignoreThumbnail}
+    <a href="{$thumb|image}" class="uk-display-block uk-height-1-1 image-preview">
+        <img data-src="{$thumb|image:thumbnail}" uk-img width="320" height="200" />
+    </a>
+{elseif $type === App\Model\FileRepository::FILE_TYPE_IMAGE}
+    <a href="{$source|image}" class="uk-display-block uk-height-1-1 image-preview">
+        <img data-src="{$source|image:thumbnail}" uk-img width="320" height="200" />
+    </a>
+{elseif $type === App\Model\FileRepository::FILE_TYPE_YOUTUBE}
+    <a class="yt-preview" target="_blank" href="{$source}">
+        <img src="{$source|ytThumbnail}"/>
+    </a>
+{elseif $type === App\Model\FileRepository::FILE_TYPE_COMPARISON}
+    <button
+            type="button"
+            class="compare-thumbnail"
+            uk-toggle="#modal-comparison-{$id}"
+            n:inner-foreach="App\Model\FileRepository::getComparisonList($source) as $image"
+    >
+        <img src="{$image|image:thumbnailSplit}"/>
+    </button>
+    <div id="modal-comparison-{$id}" class="uk-flex-top" uk-modal>
+        <div class="uk-modal-dialog uk-width-auto uk-margin-auto-vertical">
+            {* TODO *}
+        </div>
+    </div>
+{else}
+    <a
+            data-type="{$type === App\Model\FileRepository::FILE_TYPE_VIDEO ? 'video' : 'iframe'}"
+            href="{$baseUrl}/{$getFileLink($file)}"
+            uk-icon="icon: {$iconMap[$type]}; ratio: 5"
+            class="uk-flex uk-flex-center uk-width-1-1 uk-height-1-1"
+    >
+    </a>
+{/if}

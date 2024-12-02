@@ -1,0 +1,14 @@
+{varType mixed $input}
+{varType bool $isMultiple}
+
+<div class="uk-placeholder uk-text-center uk-position-relative drop-zone uk-background-default">
+    {if $input instanceof Nette\Forms\Controls\UploadControl}
+        {input $input}
+    {else}
+        {$input|noescape}
+    {/if}
+    <div class="uk-padding-small">
+        <span class="uk-text-middle">Nahrajte soubor{if $isMultiple}y{/if} přetáhnutím nebo</span>
+        <span class="uk-link">{if $isMultiple}je{else}ho{/if} vyberte.</span>
+    </div>
+</div>

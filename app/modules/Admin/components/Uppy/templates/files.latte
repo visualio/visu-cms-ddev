@@ -1,0 +1,20 @@
+{varType array $files}
+{varType bool $showRemoveButton}
+{varType callable $onThumbnailRender}
+
+<li n:foreach="$files as $file" class="uk-flex uk-flex-middle" id="{$file}">
+    <span class="uk-border-circle uk-margin-right uk-overflow-hidden">
+        {$onThumbnailRender($file)}
+    </span>
+    <span class="uk-margin-auto-right">
+        {$file}
+    </span>
+    <button
+            n:if="$showRemoveButton"
+            data-name="{$file}"
+            class="uk-icon-button remove-file-button"
+            uk-icon="trash"
+            type="button"
+    >
+    </button>
+</li>

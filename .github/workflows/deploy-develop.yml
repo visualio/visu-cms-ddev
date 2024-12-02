@@ -1,0 +1,156 @@
+name: 🚀 Deploy develop
+on:
+  push:
+    branches: [ develop ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v3
+
+      - name: 🧵 Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: 🐘 Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          tools: composer
+
+      - name: 💾 Install Composer packages
+        run: composer install --ignore-platform-reqs
+
+      - name: 🐘🔬 Run PHP checks (PHPStan)
+        run: npm run test-php
+
+      - name: ☕🔬 Run Latte checks
+        run: npm run test-latte
+
+      - name: 📂 Sync project files
+        uses: seegr/FTP-Deploy-Action@master
+        with:
+          server: ${{ secrets.FTP_HOST_DEV }}
+          username: ${{ secrets.FTP_USERNAME_DEV }}
+          password: ${{ secrets.FTP_PASSWORD_DEV }}
+          protocol: ftps
+          local-dir: './'
+          server-dir: './subdom/burdamediaextra/'
+          state-name: '.deploy-sync-state.json'
+          timeout: 3600000
+          #log-level: verbose
+          exclude: |
+            .idea/**
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            .ddev/**
+            vendor/**
+            .github/**
+            dev/**
+            dockerfiles/**
+            scripts/**
+            sql/**
+            .env
+            .env.example
+            .gitattributes
+            .gitignore
+            .stylelintignore
+            composer.json
+            composer.lock
+            docker-compose.yml
+            package.json
+            package-lock.json
+            postcss.config.js
+            README.md
+            site.conf
+            svgsprite.config.json
+            tailwind.config.js
+            vite.config.js
+
+      - name: 🏗❔ Check changed asset files
+        id: changed_assets
+        uses: dorny/paths-filter@v2
+        with:
+          filters: |
+            package:
+              - 'package.json'
+            dev:
+              - 'dev/**/*'
+
+      - name: 🧵 Setup Node
+        if: steps.changed_assets.outputs.package == 'true' || steps.changed_assets.outputs.dev == 'true'
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: 📦 Cache NPM packages
+        if: steps.changed_assets.outputs.package == 'true' || steps.changed_assets.outputs.dev == 'true'
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: 💾 Install NPM packages
+        if: steps.changed_assets.outputs.package == 'true' || steps.changed_assets.outputs.dev == 'true'
+        run: npm install
+
+      - name: 🏗 Build front-office assets
+        if: steps.changed_assets.outputs.package == 'true' || steps.changed_assets.outputs.dev == 'true'
+        run: npm run build
+
+      - name: 🏗 Build back-office assets
+        if: steps.changed_assets.outputs.package == 'true' || steps.changed_assets.outputs.dev == 'true'
+        run: npm run build:admin
+
+      - name: 🐘❔Check changed php packages
+        id: changed_vendor
+        uses: dorny/paths-filter@v2
+        with:
+          filters: |
+            composer:
+              - 'composer.json'
+
+      - name: 🎶 Cache Composer packages
+        if: steps.changed_vendor.outputs.composer == 'true'
+        id: composer-cache
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+
+      - name: 📂 🐘 Sync vendor files
+        if: steps.changed_vendor.outputs.composer == 'true'
+        uses: seegr/FTP-Deploy-Action@master
+        with:
+          server: ${{ secrets.FTP_HOST_DEV }}
+          username: ${{ secrets.FTP_USERNAME_DEV }}
+          password: ${{ secrets.FTP_PASSWORD_DEV }}
+          protocol: ftps
+          local-dir: './vendor/'
+          server-dir: './subdom/burdamediaextra/vendor/'
+          state-name: '.deploy-vendor-sync-state.json'
+          timeout: 3600000
+          #log-level: verbose
+
+      - name: 🗑 Clean Nette temp
+        uses: StephanThierry/ftp-delete-action@v2.1
+        with:
+          host: ${{ secrets.FTP_HOST_DEV }}
+          user: ${{ secrets.FTP_USERNAME_DEV }}
+          password: ${{ secrets.FTP_PASSWORD_DEV }}
+          remoteFiles: "temp/.gitignore"
+          remoteDirectories: "temp/cache"
+          workingDir: "./subdom/burdamediaextra"

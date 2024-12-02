@@ -1,0 +1,21 @@
+{templateType App\AdminModule\Types\BaseTemplate}
+
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{ifset #metaTitle}{include metaTitle|striptags} | {/ifset}{ifset $navItem}{$navItem->title} | {/ifset}Visualio CMS</title>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="robots" content="noindex,follow">
+	<link rel="shortcut icon" type="image/png" sizes="32x32" href={('static/favicon.png')|image} />
+	{$viteAssets->printAdminTags("js/index.js")}
+	{block head}{/block}
+</head>
+<body class="l-body">
+{include body}
+{block scripts}{/block}
+</body>
+</html>

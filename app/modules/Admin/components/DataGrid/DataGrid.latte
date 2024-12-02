@@ -1,0 +1,40 @@
+{extends $originalTemplate}
+
+{block table-class}uk-table uk-table-striped uk-table-hover uk-table-small uk-table-middle uk-table-responsive{/block}
+
+{block datagrid-class}datagrid datagrid-{$control->getFullName()}{/block}
+
+{block pagination}
+    <tr>
+        <td
+                colspan="{$control->getColumnsCount()}"
+                n:if="!$control->isTreeView()"
+        >
+            <div class="uk-flex uk-flex-middle">
+                <a n:if="$filter_active" n:href="resetFilter!" class="ajax uk-button uk-button-default uk-button-small">
+                    {='ublaboo_datagrid.reset_filter'|translate}
+                </a>
+
+                <div class="uk-margin-auto">
+                    {control paginator}
+                </div>
+
+                <div n:if="$control->isPaginated()" class="uk-margin-right">
+                    {input $filter['perPage'], class => 'uk-select uk-form-small uk-form-width-small', onchange => "this.nextElementSibling.click()"}
+                    {input $filter['perPage_submit'], class => 'uk-hidden'}
+                </div>
+
+                <small class="uk-text-muted" n:if="$control->isPaginated()">
+                    {var $paginator = $control['paginator']->getPaginator()}
+                    {if $control->getPerPage() === 'all'}
+                        {='ublaboo_datagrid.all'|translate}
+                    {else}
+                        {$paginator->getOffset() > 0 ? $paginator->getOffset() + 1 : ($paginator->getItemCount() > 0 ? 1 : 0)} - {sizeof($rows) + $paginator->getOffset()}
+                        {='ublaboo_datagrid.from'|translate} {$paginator->getItemCount()}
+                    {/if}
+                </small>
+
+            </div>
+        </td>
+    </tr>
+{/block}

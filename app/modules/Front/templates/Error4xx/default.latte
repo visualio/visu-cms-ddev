@@ -1,0 +1,15 @@
+{layout '../../../Front/templates/@layout.latte'}
+{define bodyClass}page-error{/define}
+{define metaTitle}{_Error4xx.$errorCode.title|noescape|stripHtml}{/define}
+{define metaDescription}{_Error4xx.$errorCode.message|noescape|stripHtml}{/define}
+
+{block pageContent}
+<section>
+  <div class="container-lg">
+    <h1>{_Error4xx.$errorCode.title|noescape}</h1>
+    <small>{$errorCode}</small>
+    <p>{_Error4xx.$errorCode.message|noescape}</p>
+    <a n:href="Front:Homepage:default">{_Error4xx.goBack|noescape}</a>
+  </div>
+</section>
+{/block}

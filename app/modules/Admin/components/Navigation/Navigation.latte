@@ -1,0 +1,32 @@
+{varType bool $nested}
+{varType array $list}
+{varType App\AdminModule\Presenters\BasePresenter $presenter}
+
+<nav class="uk-light">
+    {block navList}
+        <ul
+                uk-nav
+                n:class="isset($nested) ? 'uk-nav-sub' : 'uk-nav-default uk-nav-parent-icon'"
+                n:inner-foreach="$list as $item"
+        >
+            {if $presenter->canCreate(false, $item->presenter)}
+                {var $isParent = isset($item->items) && is_array($item->items)}
+                {var $isCurrent = $presenter->isLinkCurrent($item->presenter . ':*')}
+                <li n:class="
+                    $isParent ? 'uk-parent',
+                    $isCurrent ? 'uk-active',
+                    $isParent && Nette\Utils\Arrays::some($item->items, fn($i) => $i->presenter === $presenter->getCurrentPresenterName()) ? 'uk-open'
+                ">
+                    <a href="{$presenter->link($item->presenter . ':')}">
+                        <span class="uk-margin-small-right" uk-icon="icon: {isset($item->icon) ? $item->icon : 'table'}"></span>
+                        {$item->title}
+                    </a>
+                    {if $isParent}
+                        {include navList, list: $item->items, nested: true}
+                    {/if}
+                </li>
+                <li class="uk-nav-divider" n:if="!$iterator->isLast()"></li>
+            {/if}
+        </ul>
+    {/block}
+</nav>

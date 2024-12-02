@@ -1,0 +1,45 @@
+{templateType App\FrontModule\Types\BaseTemplate}
+
+<!DOCTYPE html>
+<html lang="{$locale}">
+<head>
+    <title>{ifset metaTitle}{include block metaTitle|stripHtml} | {/ifset}{$contact->title}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="{ifset metaDescription}{include block metaDescription|stripHtml|trim}{/ifset}">
+    <meta name="copyright" content="© {php date('Y')}">
+    <meta name="robots" content="index,follow">
+    <meta name="author" content="Visualio; https://visualio.space">
+
+    {$viteAssets->printFrontTags("js/index.js")}
+
+    {if !stripos($presenter->getName(), 'error')}
+        <meta property="og:site_name" content="Visualio"/>
+        <meta property="og:title" content="{ifset metaTitle}{include block metaTitle|stripHtml}{/ifset}">
+        <meta property="og:description"
+              content="{ifset metaDescription}{include block metaDescription|stripHtml|trim|truncate:160}{/ifset}">
+        <meta property="og:url" content="{link '//this'}">
+        <meta property="og:type" content="website">
+        <meta property="og:image" content="{$baseUrl}/dist/front/images/og_image_default.png"/>
+        <meta property="og:image:secure_url" content="{$baseUrl}/dist/front/images/og_image_default.png"/> {*// https *}
+        <meta property="og:image:type" content="image/png"/>
+        <meta property="og:image:width" content="1200"/>
+        <meta property="og:image:height" content="630"/>
+        <meta property="og:locale" content="{$locale}"/>
+    {/if}
+
+    {include .Favicon}
+</head>
+
+<body class="min-h-screen font-barlow flex flex-col justify-between">
+    {include .FlashMessages flashes: $flashes}
+
+    {include .Header}
+
+    <main>
+        {include content}
+    </main>
+
+    {include .Footer}
+</body>
+</html>

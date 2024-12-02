@@ -1,0 +1,19 @@
+{
+  "mode": {
+    "inline": true,
+    "symbol": {
+      "dest": "",
+      "sprite": ""
+    }
+  },
+  "shape": {
+    "transform": [
+      {
+        "svgo": {
+          "plugins": [
+          ]
+        }
+      }
+    ]
+  }
+}

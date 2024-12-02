@@ -1,0 +1,15 @@
+{templateType App\FrontModule\Components\ChangeLocaleTemplate}
+
+{foreach $localeNames as $localeKey => $name}
+    <li class="relative">
+        <a
+            n:href="changeLocale! $localeKey"
+            n:class="$locale === $localeKey ? 'font-normal opacity-80 pointer-events-none cursor-default', 'grid text-lg text-white font-bold px-2 py-4 w-full xl:h-full xl:text-center xl:pt-8 relative items-center'"
+            title="{_ChangeLocale.switchTo, [lang => $name]}"
+            lang="{$localeKey}"
+        >
+            {$name}
+        </a>
+    </li>
+    {if !$iterator->last} <span class="grid items-center text-white px-2 py-4 xl:pt-9 opacity-50">|</span> {/if}
+{/foreach}

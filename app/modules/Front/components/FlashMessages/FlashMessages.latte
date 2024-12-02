@@ -1,0 +1,12 @@
+{templateType App\FrontModule\Types\BaseTemplate}
+
+<div n:if="count($flashes) > 0" class="fixed top-0 left-0 w-full z-100">
+	<div
+        n:foreach="$flashes as $flash"
+        role="alertdialog"
+        aria-label="{$flash->message}"
+        title="{_FlashMessages.closePrompt}"
+    >
+        {$flash->message}
+    </div>
+</div>
