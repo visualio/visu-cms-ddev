@@ -13,6 +13,12 @@
       "@php bin/setup.php"
     ]
   },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git@github.com:seegr/visu-cms-ddev.git"
+    }
+  ],
   "require": {
     "php": ">=8.2",
     "nette/application": "^3.1",
