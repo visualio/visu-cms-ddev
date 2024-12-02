@@ -13,6 +13,8 @@ if [ -z "$HTTPS_PORT" ]; then
 fi
 
 # Restart ddev
+echo "Stopping all DDEV containers..."
+ddev poweroff
 ddev restart
 
 # Spuštění příkazů s reálným výstupem

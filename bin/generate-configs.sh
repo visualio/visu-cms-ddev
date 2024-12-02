@@ -75,6 +75,7 @@ EOL
 echo "docker-compose.override.yaml created in .ddev."
 
 ### .mutagen.yaml
+mkdir -p .ddev/mutagen
 cat > .ddev/mutagen/mutagen.yml <<EOL
 sync:
   defaults:
