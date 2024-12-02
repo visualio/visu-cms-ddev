@@ -87,7 +87,7 @@ function runCommand(string $command)
 
 try {
 	// Vytvoření repozitáře přes GitHub CLI
-	echo "\nCreating repository on GitHub via SSH...\n";
+	echo "\nCreating repository on GitHub...\n";
 	runCommand("gh repo create $githubUser/$projectName --private --confirm");
 
 	echo "\nRepository '$projectName' created successfully.\n";
@@ -95,11 +95,12 @@ try {
 	// Nastavení Git repozitáře lokálně
 	echo "\nInitializing Git repository...\n";
 	runCommand("git init");
-	runCommand("git remote add origin $repoUrl");
+	runCommand("git remote add origin git@github.com:$githubUser/$projectName.git");
 
 	// Přidání secrets do GitHub Actions
 	echo "\nAdding secrets to GitHub repository...\n";
-	runCommand("gh secret set SLACK_WEBHOOK --repo $githubUser/$projectName --body \"https://hooks.slack.com/services/YOUR_SLACK_TOKEN\"");
+	runCommand("gh secret set SLACK_WEBHOOK --repo $githubUser/$projectName --body \"https://hooks.slack.com/services/YOUR/WEBHOOK/URL\"");
+
 	echo "\nSecrets added successfully.\n";
 
 	echo "\nRunning build script...\n";
